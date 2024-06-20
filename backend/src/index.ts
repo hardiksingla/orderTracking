@@ -87,7 +87,7 @@ if (true) {
 }
 
 app.post("/getOrders", async (req, res) => {
-    console.log("hello")
+    console.log("req.body", req.body)
     const verificationResult = getOrdersSchema.safeParse(req.body);
     if (!verificationResult.success) {
         return res.status(400).json({ message: "Invalid data provided." });
