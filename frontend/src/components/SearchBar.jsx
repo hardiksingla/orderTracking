@@ -7,6 +7,7 @@ function SearchBar({ Phone, setPhone , dataFetch}) {
       <input
         value={Phone}
         onChange={(e) => setPhone(e.target.value)}
+        type="number"
         className='border-2 border-gray-300 p-2 rounded-md text-center m-3'
         placeholder='Phone Number'
       />
