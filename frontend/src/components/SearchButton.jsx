@@ -11,7 +11,7 @@ function SearchButton({Phone , dataFetch , style = "" ,text = "Find Orders"}) {
   
     return (
     <button
-        className={`bg-black text-white m-5 ${style}`}
+        className={`bg-black text-white m-5 focus:outline-none ${style}`}
         onClick={clickHandler}
     >
         {text}

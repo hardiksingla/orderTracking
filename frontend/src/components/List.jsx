@@ -51,9 +51,9 @@ function List({ Phone, setPhone, dataFetch, ordersRes }) {
             <p className='my-3'>Total : ₹ {Math.round(order.price)}</p>
             <p className='my-3'>Ordered On  : {new Date(order.created_at).toLocaleString('en-US', options)}</p>            
           </div>
-          <div className='flex justify-between my-3'>
-            <button onMouseDown={(e) => handleExchangeClick(e, order.order_number)} className='bg-black text-white p-2 px-8 rounded-full text-lg'><strong>Return</strong></button>
-            <button onMouseDown={(e) => handleOrderClick(e, order.order_number)} className='bg-black text-white p-2 px-8 rounded-full'><strong>Details</strong></button>
+          <div className='flex justify-between my-3'> 
+            <button onMouseDown={(e) => handleExchangeClick(e, order.order_number)} className='bg-black text-white p-2 px-8 rounded-full text-lg focus:outline-none'><strong>Return</strong></button>
+            <button onMouseDown={(e) => handleOrderClick(e, order.order_number)} className='bg-black text-white p-2 px-8 rounded-full focus:outline-none'><strong>Details</strong></button>
           </div>
         </div>
       </div>
