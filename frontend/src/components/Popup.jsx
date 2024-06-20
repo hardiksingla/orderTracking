@@ -2,13 +2,6 @@
 import React, { useEffect, useRef } from 'react';
 
 const Popup = ({ show, onClose , data }) => {
-  const popupRef = useRef(null);
-
-  const handleClickOutside = (event) => {
-    if (popupRef.current && !popupRef.current.contains(event.target)) {
-      onClose();
-    }
-  };
 
   const handleExchange = () => {
     window.open("https://api.whatsapp.com/send?phone=917726915904&text=Help", '_blank');

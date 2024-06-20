@@ -8,7 +8,15 @@ function List({ Phone, setPhone, dataFetch, ordersRes }) {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = React.useState(false);
   const [selectedOrder, setSelectedOrder] = React.useState("");
-
+  const options = { 
+    weekday: 'short', 
+    year: 'numeric', 
+    month: 'numeric', 
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric'
+  };
+  
   useEffect(() => {
     console.log(ordersRes);
 
@@ -18,7 +26,7 @@ function List({ Phone, setPhone, dataFetch, ordersRes }) {
       if (cancelled !== "false") {
         return 'Cancelled';
       } else if (fulfilled != null) {
-        return 'Fulfilled';
+        return 'Shipped';
       }
       return 'Pending';
     }
@@ -27,25 +35,29 @@ function List({ Phone, setPhone, dataFetch, ordersRes }) {
       let clickedOrder = ordersRes.find(order => order.order_number === orderNumber);
       console.log(clickedOrder);
       setSelectedOrder(clickedOrder);
-      // showPopup ? setShowPopup(false) : setShowPopup(true);
-      togglePopup();
-
-      // if (e.button === 1) { 
-      //   window.open(clickedOrder.status_url, '_blank');
-      // } else if (e.button === 0) { 
-      //   navigate(`/order/${orderNumber}`);
-      // }
+      window.open(clickedOrder.status_url, '_blank');
     };
-
+    const handleExchangeClick = (e, orderNumber) => {
+      let clickedOrder = ordersRes.find(order => order.order_number === orderNumber);
+      console.log(`https://api.whatsapp.com/send?phone=917726915904&text=I would like to return / exchange for order: ${clickedOrder.order_number}`);
+      window.open(`https://api.whatsapp.com/send?phone=917726915904&text=I would like to return / exchange for order: ${clickedOrder.order_number}`, '_blank');
+    };
     setOrders(ordersRes.map((order, index) => (
-      <div key={index} className={'flex justify-between mx-5 border-b-2 p-1'}>
-        <div className="w-full flex justify-around p-3"
-          onMouseDown={(e) => handleOrderClick(e, order.order_number)}
+      <div key={index} className={'mx-5 border-b-2 p-1 bg-gray-50 m-2 rounded-2xl'}>
+        <div className="w-full p-4"
           style={{ cursor: 'pointer' }}>
-          <p>{order.order_number}</p>
-          <p>{Math.round(order.price)}</p>
-          <p>{findStatus(order.cancelled, order.fullfilment_status)}</p>
-          {/* <a><button>Return/Exchange</button></a> */}
+          <div className="flex justify-between m-3 ">
+            <p className='text-3xl'>{order.order_number}</p>
+            <p className='text-lg'>{findStatus(order.cancelled, order.fullfilment_status)}</p>
+          </div>
+          <div className='my-3'>
+            <p className='my-3'>Total : ₹ {Math.round(order.price)}</p>
+            <p className='my-3'>Ordered On  : {new Date(order.created_at).toLocaleString('en-US', options)}</p>            
+          </div>
+          <div className='flex justify-between my-3'>
+            <button onMouseDown={(e) => handleOrderClick(e, order.order_number)} className='bg-black text-white p-2 px-8 rounded-full'><strong>Details</strong></button>
+            <button onMouseDown={(e) => handleExchangeClick(e, order.order_number)} className='bg-black text-white p-2 px-8 rounded-full text-lg'><strong>Return</strong></button>
+          </div>
         </div>
       </div>
     )));
@@ -56,43 +68,17 @@ function List({ Phone, setPhone, dataFetch, ordersRes }) {
   };
 
   return (
-    <div className=''>
-      <Popup show={showPopup} onClose={togglePopup} data={selectedOrder} />
-      {/* {
-        showPopup &&
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
-            
-            >
-          <div className="bg-white p-4 rounded shadow-lg w-1/3">
-            <button
-              onClick={() => setShowPopup(false)}
-              className="float-right text-gray-500 hover:text-gray-700"
-            >
-              &times;
-            </button>
-            <div className="mt-4">
-              <p>This is a centered popup!</p>
-              <p>{selectedOrder}</p>
-            </div>
-          </div>
-        </div>
-      } */}
-      
-      <SearchBar Phone={Phone} setPhone={setPhone} dataFetch={dataFetch} />
-      {orders.length === 0 ? <div>No Orders Found</div> :
-        <div>
-          <div className='flex justify-between mx-5 border-t-2 border-b-2 p-1 bg-gray-200'>
-            <div className='w-full flex justify-around p-3'>
-              <p>Order</p>
-              <p>Total</p>
-              <p>Status</p>
-              {/* <p>Status</p> */}
-            </div>
-          </div>
+    <div className="bg-gray-200 min-h-screen flex flex-col">
+      <div className="sticky top-0 z-10 bg-gray-200">
+        <SearchBar Phone={Phone} setPhone={setPhone} dataFetch={dataFetch} />
+      </div>
+      {orders.length === 0 ? null : (
+        <div className="flex-grow overflow-auto">
           {orders}
         </div>
-      }
+      )}
     </div>
+
   );
 }
 

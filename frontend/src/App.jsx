@@ -12,6 +12,11 @@ function App() {
   const [ordersRes, setOrdersRes] = useState([]);
   const dataFetch = async () => {
     try {
+      console.log(Phone);
+      const numericString = Phone.replace(/\D/g, '');
+      console.log(numericString);
+      const rightmost10Digits = numericString.slice(-10);
+      setPhone(rightmost10Digits);
       const response = await axios.post(`${API_URL}/getOrders`, { phone: Phone });
       // console.log(response.data);
       setOrdersRes(response.data);
