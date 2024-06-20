@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
-import Popup from './Popup';
 
 function List({ Phone, setPhone, dataFetch, ordersRes }) {
   const [orders, setOrders] = React.useState([]);
@@ -12,9 +11,7 @@ function List({ Phone, setPhone, dataFetch, ordersRes }) {
     weekday: 'short', 
     year: 'numeric', 
     month: 'numeric', 
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric'
+    day: 'numeric'
   };
   
   useEffect(() => {
@@ -55,8 +52,8 @@ function List({ Phone, setPhone, dataFetch, ordersRes }) {
             <p className='my-3'>Ordered On  : {new Date(order.created_at).toLocaleString('en-US', options)}</p>            
           </div>
           <div className='flex justify-between my-3'>
-            <button onMouseDown={(e) => handleOrderClick(e, order.order_number)} className='bg-black text-white p-2 px-8 rounded-full'><strong>Details</strong></button>
             <button onMouseDown={(e) => handleExchangeClick(e, order.order_number)} className='bg-black text-white p-2 px-8 rounded-full text-lg'><strong>Return</strong></button>
+            <button onMouseDown={(e) => handleOrderClick(e, order.order_number)} className='bg-black text-white p-2 px-8 rounded-full'><strong>Details</strong></button>
           </div>
         </div>
       </div>

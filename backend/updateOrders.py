@@ -17,17 +17,13 @@ def standardize_phone_number(phone):
         return None
   
     phone = re.sub(r'\D', '', phone)
-    if phone.startswith('91'):
-        phone = phone[2:]
-    if phone.startswith('0'):
-        phone = phone[1:]
-    
-    return phone
+    return phone[-10:]
 
 
 def update_order():
-    # startId = 5983360975131
-    startId = 0
+    # startId = 6043926724891
+    startId = 6000724476187
+    # startId = 0
     moreOrders = True
     
     while moreOrders:
@@ -57,7 +53,7 @@ def update_order():
                 phone = order['phone']  or  None
                 if not phone : 
                     try:
-                        phone = order['shipping_address']['phone'] or order['shipping_address']['phone'] or None
+                        phone = order['shipping_address']['phone'] or order['billing_address']['phone'] or None
                     except:
                         phone = None
                 mongoorder['phone'] = standardize_phone_number(phone)

@@ -24,7 +24,7 @@ function Home({ Phone, setPhone, dataFetch }) {
                         value={Phone}
                         onChange={(e) => setPhone(e.target.value)}
                         type="number"
-                        className="border-2 border-gray-300 p-2 rounded-md text-center w-80 max-w-sm"
+                        className="border-2 border-gray-300 p-2 rounded-md text-center w-80 max-w-sm focus:outline-none focus:border-black"
                         placeholder="Phone Number"
                     />
                 </div>

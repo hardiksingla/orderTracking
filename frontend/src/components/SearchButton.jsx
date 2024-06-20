@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-function SearchButton({Phone , dataFetch , style = ""}) {
+function SearchButton({Phone , dataFetch , style = "" ,text = "Find Orders"}) {
     const navigate = useNavigate();
     const clickHandler = () => {
         navigate('/list');
@@ -14,7 +14,7 @@ function SearchButton({Phone , dataFetch , style = ""}) {
         className={`bg-black text-white m-5 ${style}`}
         onClick={clickHandler}
     >
-        Find Orders
+        {text}
     </button>
   )
 }
